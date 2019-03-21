@@ -9,7 +9,7 @@ using namespace std;
 int main()
 {
     string name;
-    int start_hr, end_hr, breaks_hr_start, breaks_hr_end, break_count = 0, breaks_temp_start = 0, breaks_temp_end = 0, total_time = 0, count = 0;
+    int start_hr, end_hr, breaks_hr_start, breaks_hr_end, break_count = 0, breaks_temp_start = 0, breaks_temp_end = 0, total_time = 0;
     int start_min, end_min, breaks_min_start, breaks_min_end, sub_time;
     int breaks_start[5] = {0, 0, 0, 0, 0};
     int breaks_end[5] = {0, 0, 0, 0, 0};
@@ -20,9 +20,9 @@ int main()
     // Get name for now, for a more personal experience throughout the program.
     cout << "Please enter your name: ";
     getline(cin, name);
-    
+
     // Testing for name. Delete later.
-    cout << "Your name is: " << name << "!" << endl << endl;
+    //cout << "Your name is: " << name << "!" << endl << endl;
     
     // Ask for start hour, 24 hr format.
     do
@@ -66,7 +66,7 @@ int main()
         // Ask for lunch hour start, 24 hr format.
         do
         {
-            cout << "Please enter the hour in which you had break " << (break_count + 1) << " (use the 24-hr format): ";
+            cout << "Please enter the hour you started break " << (break_count + 1) << " (use the 24-hr format): ";
             cin >> breaks_hr_start;
             
             cout << endl << endl;
@@ -84,7 +84,7 @@ int main()
         // Ask for lunch hour end, 24 hr format.
         do
         {
-            cout << "Please enter the hour in which you had break " << (break_count + 1) << " (use the 24-hr format): ";
+            cout << "Please enter the hour you ended break " << (break_count + 1) << " (use the 24-hr format): ";
             cin >> breaks_hr_end;
             
             cout << endl << endl;
@@ -94,13 +94,10 @@ int main()
         do
         {
             cout << "Please enter the ending minute for break " << (break_count + 1) << ": ";
-            cin >> breaks_min_start;
+            cin >> breaks_min_end;
             
             cout << endl << endl;
-        } while(breaks_min_start < 0 || breaks_min_start > 59);
-        
-        // Increase counter
-        count = (count + 1);
+        } while(breaks_min_end < 0 || breaks_min_end > 59);
         
         // Convert breaks and add time for start
         breaks_temp_start = ((breaks_hr_start * 60) + breaks_min_start);
@@ -111,6 +108,9 @@ int main()
         // Place data in array
         breaks_start[break_count] = breaks_temp_start;
         breaks_end[break_count] = breaks_temp_end;
+        
+        // Increase counter
+        break_count = (break_count + 1);
         
         // Ask for adding new break
         cout << "Would you like to add a new break (y/n)? ";
@@ -148,7 +148,7 @@ int main()
     // For total time
     while(sub_time > 0)
     {
-        if(sub_time > 60)
+        if(sub_time >= 60)
         {
             tot_sub_hr += 1;
             sub_time -= 60;
@@ -163,7 +163,7 @@ int main()
     // For total work time
     while(total_time > 0)
     {
-        if(total_time > 60)
+        if(total_time >= 60)
         {
             tot_num_hr += 1;
             total_time -= 60;
@@ -177,7 +177,7 @@ int main()
     
     // Output data. Give range (full working day) and then each break (above 0). Below that, give total time worked in hours and minutes. 
     system("CLS");
-    cout << "You have worked a total range of: " << tot_num_hr << " hrs. and " << tot_num_min << " mins." << endl << endl;
+    cout << name << ", you have worked a total range of: " << tot_num_hr << " hrs. and " << tot_num_min << " mins." << endl << endl;
     cout << "Your breaks are as follows: \n";
     for(int disp = 0; disp < 5; disp++)
     {
