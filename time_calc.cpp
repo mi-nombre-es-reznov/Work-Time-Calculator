@@ -1,6 +1,11 @@
 // Nicholas Perez-Aguilar
 // Start Date: 21 March 2019
-// Description: This will be a program that will compute times to display how many hours/minutes you worked, with time on/off.
+/* 
+    Description: This will be a program that will compute times to display how many hours/minutes you worked, with time on/off. The program
+    will ask the user if for their start and end times, seperating a space between hours and minutes. The prgram will display an option for the
+    user to enter breaks in and have those calculated in the time off from working. Depending on the data that the system holds, only certain
+    information will be displayed, to avoid redundancy.
+*/
 
 #include <iostream>
 #include <string>
@@ -15,121 +20,97 @@ int main()
     int breaks_end[5] = {0, 0, 0, 0, 0};
     int breaks_range[5] = {0, 0, 0, 0, 0};
     int tot_num_hr = 0, tot_num_min = 0, tot_sub_hr = 0, tot_sub_min = 0;
-    char again;
+    char again, ask_break;
+    bool flag = false, asked_already = false;
     
     // Get name for now, for a more personal experience throughout the program.
     cout << "Please enter your name: ";
     getline(cin, name);
-
-    // Testing for name. Delete later.
-    //cout << "Your name is: " << name << "!" << endl << endl;
     
     // Ask for start hour, 24 hr format.
     do
     {
-        cout << "Please enter the hour in which you started work (use the 24-hr format): ";
-        cin >> start_hr;
+        cout << "Please enter the time in which you started work (use the 24-hr format). Seperate the hour and minute by a space (ex: 8 20): ";
+        cin >> start_hr >> start_min;
         
         cout << endl << endl;
-    } while(start_hr < 0 || start_hr > 23);
-    
-    // Ask for start minute.
-    do
-    {
-        cout << "Please enter the minute in which you started work: ";
-        cin >> start_min;
-        
-        cout << endl << endl;
-    } while(start_min < 0 || start_min > 59);
+    } while(start_hr < 0 || start_hr > 23 || start_min < 0 || start_min > 59);
     
     // Ask for ending hour, 24 hr format.
     do
     {
-        cout << "Please enter the hour in which you ended work (use the 24-hr format): ";
-        cin >> end_hr;
-        
+        cout << "Please enter the time in which you ended work (use the 24-hr format). Seperate the hour and minute by a space (ex: 19 00): ";
+        cin >> end_hr >> end_min;
+
         cout << endl << endl;
-    } while(end_hr < 0 || end_hr > 23);
-    
-    // Ask for ending minute.
-    do
-    {
-        cout << "Please enter the minute in which you ended work: ";
-        cin >> end_min;
-        
-        cout << endl << endl;
-    } while(end_min < 0 || end_min > 59);
+    } while(end_hr < 0 || end_hr > 23 || end_min < 0 || end_min > 59);
     
     // Begin loop for breaks. Ask for number of breaks during work day, not to exceed 5. Place in 2 arrays (hr and min).
     do
     {
-        // Ask for lunch hour start, 24 hr format.
-        do
+        // Ask if there are any breaks that want to be recorded
+        if(asked_already == false)
         {
-            cout << "Please enter the hour you started break " << (break_count + 1) << " (use the 24-hr format): ";
-            cin >> breaks_hr_start;
-            
-            cout << endl << endl;
-        } while(breaks_hr_start < 0 || breaks_hr_start > 23);
-        
-        // Ask for lunch hour end minute.
-        do
-        {
-            cout << "Please enter the starting minute for break " << (break_count + 1) << ": ";
-            cin >> breaks_min_start;
-            
-            cout << endl << endl;
-        } while(breaks_min_start < 0 || breaks_min_start > 59);
-        
-        // Ask for lunch hour end, 24 hr format.
-        do
-        {
-            cout << "Please enter the hour you ended break " << (break_count + 1) << " (use the 24-hr format): ";
-            cin >> breaks_hr_end;
-            
-            cout << endl << endl;
-        } while(breaks_hr_end < 0 || breaks_hr_end > 23);
-        
-        // Ask for lunch minute end, 24 hr format.
-        do
-        {
-            cout << "Please enter the ending minute for break " << (break_count + 1) << ": ";
-            cin >> breaks_min_end;
-            
-            cout << endl << endl;
-        } while(breaks_min_end < 0 || breaks_min_end > 59);
-        
-        // Convert breaks and add time for start
-        breaks_temp_start = ((breaks_hr_start * 60) + breaks_min_start);
-        
-        // Convert breaks and add time for start
-        breaks_temp_end = ((breaks_hr_end * 60) + breaks_min_end);
-        
-        // Place data in array
-        breaks_start[break_count] = breaks_temp_start;
-        breaks_end[break_count] = breaks_temp_end;
-        
-        // Increase counter
-        break_count = (break_count + 1);
-        
-        // Ask for adding new break
-        cout << "Would you like to add a new break (y/n)? ";
-        cin >> again;
-        
-        if(isalpha(again))
-        {
-            again = tolower(again);
-        }
-        else
-        {
-            again = 'n';
+            cout << "Did you take any breaks that you want to record? (y/n) ";
+            cin >> ask_break;
+            ask_break = tolower(ask_break);
+            asked_already = true;
         }
         
+        // If user wants to ask break, allow for it.
+        if(ask_break == 'y')
+        {
+            // Ask for lunch hour start, 24 hr format.
+            do
+            {
+                cout << "Please enter the time you started break " << (break_count + 1) << " (use the 24-hr format) - seperate the hour and minute by a space (21 43): ";
+                cin >> breaks_hr_start >> breaks_min_start;
+                
+                cout << endl << endl;
+            } while(breaks_hr_start < 0 || breaks_hr_start > 23 || breaks_min_start < 0 || breaks_min_start > 59);
+            
+            // Ask for lunch hour end, 24 hr format.
+            do
+            {
+                cout << "Please enter the time you ended break " << (break_count + 1) << " (use the 24-hr format) - seperate the hour and minute by a space (11 20): ";
+                cin >> breaks_hr_end >> breaks_min_end;
+                
+                cout << endl << endl;
+            } while(breaks_hr_end < 0 || breaks_hr_end > 23 || breaks_min_end < 0 || breaks_min_end > 59);
+            
+            // Convert breaks and add time for start
+            breaks_temp_start = ((breaks_hr_start * 60) + breaks_min_start);
+            
+            // Convert breaks and add time for start
+            breaks_temp_end = ((breaks_hr_end * 60) + breaks_min_end);
+            
+            // Place data in array
+            breaks_start[break_count] = breaks_temp_start;
+            breaks_end[break_count] = breaks_temp_end;
+            
+            // Increase counter
+            break_count = (break_count + 1);
+            
+            // Ask for adding new break
+            cout << "Would you like to add a new break (y/n)? ";
+            cin >> again;
+            
+            if(isalpha(again))
+            {
+                again = tolower(again);
+            }
+            else
+            {
+                again = 'n';
+            }
+            
+        }
+
     }while(again == 'y');
     // End loop for breaks.
     
     // Convert all times over to minutes.
-    total_time = (((end_hr * 60) + end_min) - (start_hr * 60) + start_min);
+    total_time = (((end_hr * 60) + end_min) - ((start_hr * 60) + start_min));
     sub_time = total_time;
     
     // Convert breaks into minutes. Add hr[i] with time[i] together. Place result in mins. in new array.
@@ -178,15 +159,53 @@ int main()
     // Output data. Give range (full working day) and then each break (above 0). Below that, give total time worked in hours and minutes. 
     system("CLS");
     cout << name << ", you have worked a total range of: " << tot_num_hr << " hrs. and " << tot_num_min << " mins." << endl << endl;
-    cout << "Your breaks are as follows: \n";
-    for(int disp = 0; disp < 5; disp++)
+    
+    // Created for the possibility of multiple double 0's for output
+    if(start_min == 0 && end_min == 0)
     {
-        if(breaks_range[disp] > 0)
+        cout << "Start Time - " << start_hr << ":00" << endl;
+        cout << "End Time - " << end_hr << ":00" << endl << endl;
+    }
+    else if(start_min == 0)
+    {
+        cout << "Start Time - " << start_hr << ":00" << endl;
+        cout << "End Time - " << end_hr << ":" << end_min << endl << endl;
+    }
+    else if(end_min == 0)
+    {
+        cout << "Start Time - " << start_hr << ":" << start_min << endl;
+        cout << "End Time - " << end_hr << ":00" << endl << endl;
+    }
+    else
+    {
+        cout << "Start Time - " << start_hr << ":" << start_min << endl;
+        cout << "End Time - " << end_hr << ":" << end_min << endl << endl;
+    }
+    
+    // To determine if there are any non-zero values in the array
+    for(int count = 0; count < 5; count++)
+    {
+        if((breaks_range[count] > 0) && (flag == false))
         {
-            cout << "Break " << (disp + 1) << ": " << breaks_range[disp] << " minutes" << endl;
+            cout << "Your breaks are as follows: \n\n";
+            flag = true;
+        }
+        
+        // Traverse through the breaks
+        if(flag == true)
+        {
+            if(breaks_range[count] > 0)
+            {
+                cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << endl;
+            }
         }
     }
-    cout << "You have worked a total time (including breaks): " << tot_sub_hr << " hrs. and " << tot_sub_min << " mins." << endl;
+    
+    if(flag == true)
+    {
+        cout << "\n\n\nYou have worked a total time (including breaks): " << tot_sub_hr << " hrs. and " << tot_sub_min << " mins." << endl;
+    }
+
     system("pause");
     system("CLS");
     cout << "\n\n\n\n\n\n\n\n\n\n\nThank you for using NCompEng Technologies!\n\n\n\n\n\n\n\n\n\n\n";
