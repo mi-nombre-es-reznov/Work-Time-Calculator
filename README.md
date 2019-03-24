@@ -8,7 +8,7 @@
     minutes. The prgram will display an option for the user to enter breaks in 
     and have those calculated in the time off from working. Depending on the 
     data that the system holds, only certain information will be displayed, to 
-    avoid redundancy. <br><br>
+    avoid redundancy.
     
     This program shows the start and end time after the original calculation. 
     The program also displays your break times, with the times you went on 
