@@ -11,6 +11,16 @@
 #include <string>
 using namespace std;
 
+// Call functions
+void store_break_times(int, int, int, int, int);
+
+// Global variables
+int out_break_hr_s, out_break_min_s, out_break_hr_e, out_break_min_e;
+int arr_times_hr_s[5] = {0, 0, 0, 0, 0};
+int arr_times_min_s[5] = {0, 0, 0, 0, 0};
+int arr_times_hr_e[5] = {0, 0, 0, 0, 0};
+int arr_times_min_e[5] = {0, 0, 0, 0, 0};
+
 int main()
 {
     string name;
@@ -26,14 +36,15 @@ int main()
     // Get name for now, for a more personal experience throughout the program.
     cout << "Please enter your name: ";
     getline(cin, name);
+    cout << endl << endl;
     
     // Ask for start hour, 24 hr format.
     do
     {
         cout << "Please enter the time in which you started work (use the 24-hr format). Seperate the hour and minute by a space (ex: 8 20): ";
         cin >> start_hr >> start_min;
+        cout << endl;
         
-        cout << endl << endl;
     } while(start_hr < 0 || start_hr > 23 || start_min < 0 || start_min > 59);
     
     // Ask for ending hour, 24 hr format.
@@ -41,8 +52,8 @@ int main()
     {
         cout << "Please enter the time in which you ended work (use the 24-hr format). Seperate the hour and minute by a space (ex: 19 00): ";
         cin >> end_hr >> end_min;
-
-        cout << endl << endl;
+        cout << endl;
+        
     } while(end_hr < 0 || end_hr > 23 || end_min < 0 || end_min > 59);
     
     // Begin loop for breaks. Ask for number of breaks during work day, not to exceed 5. Place in 2 arrays (hr and min).
@@ -55,6 +66,7 @@ int main()
             cin >> ask_break;
             ask_break = tolower(ask_break);
             asked_already = true;
+            cout << endl << endl;
         }
         
         // If user wants to ask break, allow for it.
@@ -65,8 +77,8 @@ int main()
             {
                 cout << "Please enter the time you started break " << (break_count + 1) << " (use the 24-hr format) - seperate the hour and minute by a space (21 43): ";
                 cin >> breaks_hr_start >> breaks_min_start;
+                cout << endl;
                 
-                cout << endl << endl;
             } while(breaks_hr_start < 0 || breaks_hr_start > 23 || breaks_min_start < 0 || breaks_min_start > 59);
             
             // Ask for lunch hour end, 24 hr format.
@@ -77,6 +89,9 @@ int main()
                 
                 cout << endl << endl;
             } while(breaks_hr_end < 0 || breaks_hr_end > 23 || breaks_min_end < 0 || breaks_min_end > 59);
+            
+            // Push break times into an array for pulling later
+            store_break_times(breaks_hr_start, breaks_min_start, breaks_hr_end, breaks_min_end, break_count);
             
             // Convert breaks and add time for start
             breaks_temp_start = ((breaks_hr_start * 60) + breaks_min_start);
@@ -94,6 +109,7 @@ int main()
             // Ask for adding new break
             cout << "Would you like to add a new break (y/n)? ";
             cin >> again;
+            cout << endl << endl;
             
             if(isalpha(again))
             {
@@ -195,8 +211,87 @@ int main()
         if(flag == true)
         {
             if(breaks_range[count] > 0)
-            {
-                cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << endl;
+            {   // 00:00 - 00:00
+                if((arr_times_hr_s[count] == 0) && (arr_times_min_s[count] == 0) && (arr_times_hr_e[count] == 0) && (arr_times_min_e[count] == 0))
+                {
+                    cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
+                    << "00:00 - 00:00" << endl;
+                } // 00:00 - 00:x
+                else if((arr_times_hr_s[count] == 0) && (arr_times_min_s[count] == 0) && (arr_times_hr_e[count] == 0))
+                {
+                    cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
+                    << "00:00 - " << "00:" << arr_times_min_e[count] << endl;
+                } // 00:00 - x:00
+                else if((arr_times_hr_s[count] == 0) && (arr_times_min_s[count] == 0) && (arr_times_min_e[count] == 0))
+                {
+                    cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
+                    << "00:00" << " - " << arr_times_hr_e[count] << ":00" << endl;
+                } // 00:00 - x:x
+                else if((arr_times_hr_s[count] == 0) && (arr_times_min_s[count] == 0))
+                {
+                    cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
+                    << "00:00" << " - " << arr_times_hr_e[count] << ":" << arr_times_min_e[count] << endl;
+                } // 00:x - 00:00
+                else if((arr_times_hr_s[count] == 0) && (arr_times_hr_e[count] == 0) && (arr_times_min_e[count] == 0))
+                {
+                    cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
+                    << "00:" << arr_times_min_s[count] << " - " << "00:00" << endl;
+                } // 00:x - 00:x
+                else if((arr_times_hr_s[count] == 0) && (arr_times_hr_e[count] == 0))
+                {
+                    cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
+                    << "00:" << arr_times_min_s[count] << " - " << "00:" << arr_times_min_e[count] << endl;
+                } // 00:x - x:00
+                else if((arr_times_hr_s[count] == 0) && (arr_times_min_e[count] == 0))
+                {
+                    cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
+                    << "00:" << arr_times_min_s[count] << " - " << arr_times_hr_e[count] << ":00" << endl;
+                } // 00:x - x:x
+                else if(arr_times_hr_s[count] == 0)
+                {
+                    cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
+                    << "00:" << arr_times_min_s[count] << " - " << arr_times_hr_e[count] << ":" << arr_times_min_e[count] << endl;
+                } // x:00 - 00:00
+                else if((arr_times_min_s[count] == 0) && (arr_times_hr_e[count] == 0) && (arr_times_min_e[count] == 0))
+                {
+                    cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
+                    << arr_times_hr_s[count] << ":00 - 00:00" << endl;
+                } // x:00 - 00:x
+                else if((arr_times_min_s[count] == 0) && (arr_times_hr_e[count] == 0))
+                {
+                    cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
+                    << arr_times_hr_s[count] << ":00" << " - " << "00:" << arr_times_min_e[count] << endl;
+                } // x:00 - x:00
+                else if((arr_times_min_s[count] == 0) && (arr_times_min_e[count] == 0))
+                {
+                    cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
+                    << arr_times_hr_s[count] << ":00" << " - " << arr_times_hr_e[count] << ":00" << endl;
+                } // x:00 - x:x
+                else if(arr_times_min_s[count] == 0)
+                {
+                    cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
+                    << arr_times_hr_s[count] << ":00" << " - " << arr_times_hr_e[count] << ":" << arr_times_min_e[count] << endl;
+                } // x:x - 00:00
+                else if((arr_times_hr_e[count] == 0) && (arr_times_min_e[count] == 0))
+                {
+                    cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
+                    << arr_times_hr_s[count] << ":" << arr_times_min_s[count] << " - 00:00" << endl;
+                } // x:x - 00:x
+                else if(arr_times_hr_e[count] == 0)
+                {
+                    cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
+                    << arr_times_hr_s[count] << ":" << arr_times_min_s[count] << " - 00:" << arr_times_min_e[count] << endl; 
+                } // x:x - x:00
+                else if(arr_times_min_e[count] == 0)
+                {
+                    cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
+                    << arr_times_hr_s[count] << ":" << arr_times_min_s[count] << " - " << arr_times_hr_e[count] << ":00" << endl; 
+                }
+                else // x:x - x:x
+                {
+                    cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
+                    << arr_times_hr_s[count] << ":" << arr_times_min_s[count] << " - " << arr_times_hr_e[count] << ":" << arr_times_min_e[count] << endl;   
+                }
             }
         }
     }
@@ -212,4 +307,17 @@ int main()
     
     system("pause");
     return 0;
+}
+
+void store_break_times(int break_hr_s, int break_min_s, int break_hr_e, int break_min_e, int pos)
+{
+    out_break_hr_s = break_hr_s;
+    out_break_min_s = break_min_s;
+    out_break_hr_e = break_hr_e;
+    out_break_min_e = break_min_e;
+    
+    arr_times_hr_s[pos] = out_break_hr_s;
+    arr_times_min_s[pos] = out_break_min_s;
+    arr_times_hr_e[pos] = out_break_hr_e;
+    arr_times_min_e[pos] = out_break_min_e;
 }
