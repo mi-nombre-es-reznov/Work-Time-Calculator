@@ -13,6 +13,7 @@ using namespace std;
 
 // Call functions
 void store_break_times(int, int, int, int, int);
+int get_time_period(int);
 
 // Global variables
 int out_break_hr_s, out_break_min_s, out_break_hr_e, out_break_min_e;
@@ -20,6 +21,7 @@ int arr_times_hr_s[5] = {0, 0, 0, 0, 0};
 int arr_times_min_s[5] = {0, 0, 0, 0, 0};
 int arr_times_hr_e[5] = {0, 0, 0, 0, 0};
 int arr_times_min_e[5] = {0, 0, 0, 0, 0};
+char am_pm_start_val, am_pm_end_val;
 
 int main()
 {
@@ -31,21 +33,25 @@ int main()
     int breaks_range[5] = {0, 0, 0, 0, 0};
     int tot_num_hr = 0, tot_num_min = 0, tot_sub_hr = 0, tot_sub_min = 0;
     char again, ask_break;
-    bool flag = false, asked_already = false;
+    bool flag = false, asked_already = false, am_pm_bool = false;
     
     // Get name for now, for a more personal experience throughout the program.
     cout << "Please enter your name: ";
     getline(cin, name);
     cout << endl << endl;
     
+    // For later use of rerunning program and correctly reassigning variables
+    am_pm_bool = false;
+    
     // Ask for start hour, 24 hr format.
     do
     {
         cout << "Please enter the time in which you started work (use the 24-hr format). Seperate the hour and minute by a space (ex: 8 20): ";
         cin >> start_hr >> start_min;
-        cout << endl;
-        
-    } while(start_hr < 0 || start_hr > 23 || start_min < 0 || start_min > 59);
+
+    } while(start_hr < 0 || start_hr > 12 || start_min < 0 || start_min > 59);
+    
+    start_hr = get_time_period(start_hr);
     
     // Ask for ending hour, 24 hr format.
     do
@@ -54,7 +60,9 @@ int main()
         cin >> end_hr >> end_min;
         cout << endl;
         
-    } while(end_hr < 0 || end_hr > 23 || end_min < 0 || end_min > 59);
+    } while(end_hr < 0 || end_hr > 12 || end_min < 0 || end_min > 59);
+    
+    end_hr = get_time_period(end_hr);
     
     // Begin loop for breaks. Ask for number of breaks during work day, not to exceed 5. Place in 2 arrays (hr and min).
     do
@@ -72,6 +80,9 @@ int main()
         // If user wants to ask break, allow for it.
         if(ask_break == 'y')
         {
+            // Change bool for array usage
+            am_pm_bool = true;
+            
             // Ask for lunch hour start, 24 hr format.
             do
             {
@@ -79,7 +90,9 @@ int main()
                 cin >> breaks_hr_start >> breaks_min_start;
                 cout << endl;
                 
-            } while(breaks_hr_start < 0 || breaks_hr_start > 23 || breaks_min_start < 0 || breaks_min_start > 59);
+            } while(breaks_hr_start < 0 || breaks_hr_start > 12 || breaks_min_start < 0 || breaks_min_start > 59);
+            
+            breaks_hr_start = get_time_period(breaks_hr_start);
             
             // Ask for lunch hour end, 24 hr format.
             do
@@ -88,7 +101,9 @@ int main()
                 cin >> breaks_hr_end >> breaks_min_end;
                 
                 cout << endl << endl;
-            } while(breaks_hr_end < 0 || breaks_hr_end > 23 || breaks_min_end < 0 || breaks_min_end > 59);
+            } while(breaks_hr_end < 0 || breaks_hr_end > 12 || breaks_min_end < 0 || breaks_min_end > 59);
+            
+            breaks_hr_end = get_time_period(breaks_hr_end);
             
             // Push break times into an array for pulling later
             store_break_times(breaks_hr_start, breaks_min_start, breaks_hr_end, breaks_min_end, break_count);
@@ -107,9 +122,20 @@ int main()
             break_count = (break_count + 1);
             
             // Ask for adding new break
-            cout << "Would you like to add a new break (y/n)? ";
-            cin >> again;
-            cout << endl << endl;
+            if(break_count < 5)
+            {
+                cout << "Would you like to add a new break (y/n)? ";
+                cin >> again;
+                cout << endl << endl;
+            }
+            else
+            {
+                system("CLS");
+                cout << "You have reached the maximum limit for break entry!\n" <<
+                "You will be routed to the calculations." << endl;
+                again = 'n';
+                system("pause");
+            }
             
             if(isalpha(again))
             {
@@ -119,10 +145,8 @@ int main()
             {
                 again = 'n';
             }
-            
         }
-
-    }while(again == 'y');
+    }while((again == 'y') && (break_count <= 5));
     // End loop for breaks.
     
     // Convert all times over to minutes.
@@ -320,4 +344,41 @@ void store_break_times(int break_hr_s, int break_min_s, int break_hr_e, int brea
     arr_times_min_s[pos] = out_break_min_s;
     arr_times_hr_e[pos] = out_break_hr_e;
     arr_times_min_e[pos] = out_break_min_e;
+}
+
+int get_time_period(int var)
+{
+    char choice;
+    
+    do
+    {
+        cout << "Please select a time period." << endl << endl << endl << endl;
+        cout << "a) a.m." << endl;
+        cout << "p) p.m." << endl << endl;
+        cout << "Choice: ";
+        cin >> choice;
+        
+        choice = tolower(choice);
+    } while((choice != 'a') && (choice != 'p'));
+
+    
+    if(choice == 'p')
+    {
+        if(var != 12)
+        {
+            return (var += 12);
+        }
+        else if(var == 12)
+        {
+            return var;
+        }
+    }
+    else if(choice == 'a')
+    {
+        return var;
+    }
+    else
+    {
+        cout << "There is an error!!!" << endl << endl;
+    }
 }

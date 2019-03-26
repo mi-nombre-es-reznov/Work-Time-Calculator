@@ -13,4 +13,8 @@
     This program shows the start and end time after the original calculation. 
     The program also displays your break times, with the times you went on 
     break, next to them.
+    
+    This program will now have the capability to enter times and define them as
+    am/pm times. The system will auto correct the numbers to give accurate
+    numbers.
 </p>
