@@ -14,6 +14,7 @@ using namespace std;
 // Call functions
 void store_break_times(int, int, int, int, int);
 int get_time_period(int);
+string get_time_end_adjust(bool, int);
 
 // Global variables
 int out_break_hr_s, out_break_min_s, out_break_hr_e, out_break_min_e;
@@ -21,15 +22,20 @@ int arr_times_hr_s[5] = {0, 0, 0, 0, 0};
 int arr_times_min_s[5] = {0, 0, 0, 0, 0};
 int arr_times_hr_e[5] = {0, 0, 0, 0, 0};
 int arr_times_min_e[5] = {0, 0, 0, 0, 0};
+char am_pm_array[5];
 char am_pm_start_val, am_pm_end_val;
+string start_am_pm, end_am_pm, bs1, bs2, bs3, bs4, bs5, be1, be2, be3, be4, be5;
+int breaks_start[5] = {0, 0, 0, 0, 0};
+int breaks_end[5] = {0, 0, 0, 0, 0};
+bool array_type = false;
+string array_types_times_s[5];
+string array_types_times_e[5];
 
 int main()
 {
     string name;
     int start_hr, end_hr, breaks_hr_start, breaks_hr_end, break_count = 0, breaks_temp_start = 0, breaks_temp_end = 0, total_time = 0;
     int start_min, end_min, breaks_min_start, breaks_min_end, sub_time;
-    int breaks_start[5] = {0, 0, 0, 0, 0};
-    int breaks_end[5] = {0, 0, 0, 0, 0};
     int breaks_range[5] = {0, 0, 0, 0, 0};
     int tot_num_hr = 0, tot_num_min = 0, tot_sub_hr = 0, tot_sub_min = 0;
     char again, ask_break;
@@ -39,14 +45,18 @@ int main()
     cout << "Please enter your name: ";
     getline(cin, name);
     cout << endl << endl;
+    system("CLS");
     
     // For later use of rerunning program and correctly reassigning variables
     am_pm_bool = false;
     
+    // Give format for time at top
+    cout << "\t\t\t\t\tif (8:20), then enter -> 8 20" << endl << endl << endl;
+    
     // Ask for start hour, 24 hr format.
     do
     {
-        cout << "Please enter the time in which you started work (use the 24-hr format). Seperate the hour and minute by a space (ex: 8 20): ";
+        cout << "Please enter your start time: ";
         cin >> start_hr >> start_min;
 
     } while(start_hr < 0 || start_hr > 12 || start_min < 0 || start_min > 59);
@@ -56,7 +66,7 @@ int main()
     // Ask for ending hour, 24 hr format.
     do
     {
-        cout << "Please enter the time in which you ended work (use the 24-hr format). Seperate the hour and minute by a space (ex: 19 00): ";
+        cout << "Please enter your end time: ";
         cin >> end_hr >> end_min;
         cout << endl;
         
@@ -86,7 +96,7 @@ int main()
             // Ask for lunch hour start, 24 hr format.
             do
             {
-                cout << "Please enter the time you started break " << (break_count + 1) << " (use the 24-hr format) - seperate the hour and minute by a space (21 43): ";
+                cout << "Started break " << (break_count + 1) << ": ";
                 cin >> breaks_hr_start >> breaks_min_start;
                 cout << endl;
                 
@@ -97,7 +107,7 @@ int main()
             // Ask for lunch hour end, 24 hr format.
             do
             {
-                cout << "Please enter the time you ended break " << (break_count + 1) << " (use the 24-hr format) - seperate the hour and minute by a space (11 20): ";
+                cout << "Ended break " << (break_count + 1) << ": ";
                 cin >> breaks_hr_end >> breaks_min_end;
                 
                 cout << endl << endl;
@@ -196,6 +206,59 @@ int main()
         }
     }
     
+    // Convert times back over to 12-hr format
+    if(start_hr > 12)
+    {
+        start_hr -= 12;
+        start_am_pm = "p.m.";
+    }
+    else if(start_hr == 12)
+    {
+        start_am_pm = "p.m.";
+    }
+    else
+    {
+        start_am_pm = "a.m.";
+    }
+    
+    if(end_hr > 12)
+    {
+        end_hr -= 12;
+        end_am_pm = "p.m.";
+    }
+    else if(end_hr == 12)
+    {
+        end_am_pm = "p.m.";
+    }
+    else
+    {
+        end_am_pm = "a.m.";
+    }
+    
+    // Get correct hours for array of breaks
+    bs1 = get_time_end_adjust(false, 0);
+    bs2 = get_time_end_adjust(false, 1);
+    bs3 = get_time_end_adjust(false, 2);
+    bs4 = get_time_end_adjust(false, 3);
+    bs5 = get_time_end_adjust(false, 4);
+    be1 = get_time_end_adjust(true, 0);
+    be2 = get_time_end_adjust(true, 1);
+    be3 = get_time_end_adjust(true, 2);
+    be4 = get_time_end_adjust(true, 3);
+    be5 = get_time_end_adjust(true, 4);
+    
+    // Push values into an array for usage later
+    array_types_times_s[0] = bs1;
+    array_types_times_s[1] = bs2;
+    array_types_times_s[2] = bs3;
+    array_types_times_s[3] = bs4;
+    array_types_times_s[4] = bs5;
+    array_types_times_e[0] = be1;
+    array_types_times_e[1] = be2;
+    array_types_times_e[2] = be3;
+    array_types_times_e[3] = be4;
+    array_types_times_e[4] = be5;
+    
     // Output data. Give range (full working day) and then each break (above 0). Below that, give total time worked in hours and minutes. 
     system("CLS");
     cout << name << ", you have worked a total range of: " << tot_num_hr << " hrs. and " << tot_num_min << " mins." << endl << endl;
@@ -203,23 +266,23 @@ int main()
     // Created for the possibility of multiple double 0's for output
     if(start_min == 0 && end_min == 0)
     {
-        cout << "Start Time - " << start_hr << ":00" << endl;
-        cout << "End Time - " << end_hr << ":00" << endl << endl;
+        cout << "Start Time - " << start_hr << ":00" << "\t" << start_am_pm << endl;
+        cout << "End Time - " << end_hr << ":00" << "\t\t" << end_am_pm << endl << endl;
     }
     else if(start_min == 0)
     {
-        cout << "Start Time - " << start_hr << ":00" << endl;
-        cout << "End Time - " << end_hr << ":" << end_min << endl << endl;
+        cout << "Start Time - " << start_hr << ":00" << "\t" << start_am_pm << endl;
+        cout << "End Time - " << end_hr << ":" << end_min << "\t\t" << end_am_pm << endl << endl;
     }
     else if(end_min == 0)
     {
-        cout << "Start Time - " << start_hr << ":" << start_min << endl;
-        cout << "End Time - " << end_hr << ":00" << endl << endl;
+        cout << "Start Time - " << start_hr << ":" << start_min << "\t" << start_am_pm << endl;
+        cout << "End Time - " << end_hr << ":00" << "\t\t" << end_am_pm << endl << endl;
     }
     else
     {
-        cout << "Start Time - " << start_hr << ":" << start_min << endl;
-        cout << "End Time - " << end_hr << ":" << end_min << endl << endl;
+        cout << "Start Time - " << start_hr << ":" << start_min << "\t" << start_am_pm << endl;
+        cout << "End Time - " << end_hr << ":" << end_min << "\t\t" << end_am_pm << endl << endl;
     }
     
     // To determine if there are any non-zero values in the array
@@ -239,82 +302,82 @@ int main()
                 if((arr_times_hr_s[count] == 0) && (arr_times_min_s[count] == 0) && (arr_times_hr_e[count] == 0) && (arr_times_min_e[count] == 0))
                 {
                     cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
-                    << "00:00 - 00:00" << endl;
+                    << "00:00 " << array_types_times_s[count] << " - " << "00:00 " << array_types_times_e[count] << endl;
                 } // 00:00 - 00:x
                 else if((arr_times_hr_s[count] == 0) && (arr_times_min_s[count] == 0) && (arr_times_hr_e[count] == 0))
                 {
                     cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
-                    << "00:00 - " << "00:" << arr_times_min_e[count] << endl;
+                    << "00:00 " << array_types_times_s[count] << " - " << "00:" << arr_times_min_e[count] << " " << array_types_times_e[count] << endl;
                 } // 00:00 - x:00
                 else if((arr_times_hr_s[count] == 0) && (arr_times_min_s[count] == 0) && (arr_times_min_e[count] == 0))
                 {
                     cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
-                    << "00:00" << " - " << arr_times_hr_e[count] << ":00" << endl;
+                    << "00:00 " << array_types_times_s[count] << " - " << arr_times_hr_e[count] << ":00 " << array_types_times_e[count] << endl;
                 } // 00:00 - x:x
                 else if((arr_times_hr_s[count] == 0) && (arr_times_min_s[count] == 0))
                 {
                     cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
-                    << "00:00" << " - " << arr_times_hr_e[count] << ":" << arr_times_min_e[count] << endl;
+                    << "00:00 " << array_types_times_s[count] << " - " << arr_times_hr_e[count] << ":" << arr_times_min_e[count] << " " << array_types_times_e[count] << endl;
                 } // 00:x - 00:00
                 else if((arr_times_hr_s[count] == 0) && (arr_times_hr_e[count] == 0) && (arr_times_min_e[count] == 0))
                 {
                     cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
-                    << "00:" << arr_times_min_s[count] << " - " << "00:00" << endl;
+                    << "00:" << arr_times_min_s[count] << " " << array_types_times_s[count] << " - " << "00:00 " << array_types_times_e[count] << endl;
                 } // 00:x - 00:x
                 else if((arr_times_hr_s[count] == 0) && (arr_times_hr_e[count] == 0))
                 {
                     cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
-                    << "00:" << arr_times_min_s[count] << " - " << "00:" << arr_times_min_e[count] << endl;
+                    << "00:" << arr_times_min_s[count] << " " << array_types_times_s[count] << " - " << "00:" << arr_times_min_e[count] << " " << array_types_times_e[count] << endl;
                 } // 00:x - x:00
                 else if((arr_times_hr_s[count] == 0) && (arr_times_min_e[count] == 0))
                 {
                     cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
-                    << "00:" << arr_times_min_s[count] << " - " << arr_times_hr_e[count] << ":00" << endl;
+                    << "00:" << arr_times_min_s[count] << " " << array_types_times_s[count] << " - " << arr_times_hr_e[count] << ":00 " << array_types_times_e[count] << endl;
                 } // 00:x - x:x
                 else if(arr_times_hr_s[count] == 0)
                 {
                     cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
-                    << "00:" << arr_times_min_s[count] << " - " << arr_times_hr_e[count] << ":" << arr_times_min_e[count] << endl;
+                    << "00:" << arr_times_min_s[count] << " " << array_types_times_s[count] <<  " - " << arr_times_hr_e[count] << ":" << arr_times_min_e[count] << " " << array_types_times_e[count] << endl;
                 } // x:00 - 00:00
                 else if((arr_times_min_s[count] == 0) && (arr_times_hr_e[count] == 0) && (arr_times_min_e[count] == 0))
                 {
                     cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
-                    << arr_times_hr_s[count] << ":00 - 00:00" << endl;
+                    << arr_times_hr_s[count] << ":00 " << array_types_times_s[count] << " - 00:00 " << array_types_times_e[count] << endl;
                 } // x:00 - 00:x
                 else if((arr_times_min_s[count] == 0) && (arr_times_hr_e[count] == 0))
                 {
                     cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
-                    << arr_times_hr_s[count] << ":00" << " - " << "00:" << arr_times_min_e[count] << endl;
+                    << arr_times_hr_s[count] << ":00 " << array_types_times_s[count] << " - " << "00:" << arr_times_min_e[count] << " " << array_types_times_e[count] << endl;
                 } // x:00 - x:00
                 else if((arr_times_min_s[count] == 0) && (arr_times_min_e[count] == 0))
                 {
                     cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
-                    << arr_times_hr_s[count] << ":00" << " - " << arr_times_hr_e[count] << ":00" << endl;
+                    << arr_times_hr_s[count] << ":00 " << array_types_times_s[count] << " - " << arr_times_hr_e[count] << ":00 " << array_types_times_e[count] << endl;
                 } // x:00 - x:x
                 else if(arr_times_min_s[count] == 0)
                 {
                     cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
-                    << arr_times_hr_s[count] << ":00" << " - " << arr_times_hr_e[count] << ":" << arr_times_min_e[count] << endl;
+                    << arr_times_hr_s[count] << ":00 " << array_types_times_s[count] << " - " << arr_times_hr_e[count] << ":" << arr_times_min_e[count] << " " << array_types_times_e[count] << endl;
                 } // x:x - 00:00
                 else if((arr_times_hr_e[count] == 0) && (arr_times_min_e[count] == 0))
                 {
                     cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
-                    << arr_times_hr_s[count] << ":" << arr_times_min_s[count] << " - 00:00" << endl;
+                    << arr_times_hr_s[count] << ":" << arr_times_min_s[count] << " " << array_types_times_s[count] << " - 00:00 " << array_types_times_e[count] << endl;
                 } // x:x - 00:x
                 else if(arr_times_hr_e[count] == 0)
                 {
                     cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
-                    << arr_times_hr_s[count] << ":" << arr_times_min_s[count] << " - 00:" << arr_times_min_e[count] << endl; 
+                    << arr_times_hr_s[count] << ":" << arr_times_min_s[count] << " " << array_types_times_s[count] << " - 00:" << arr_times_min_e[count] << " " << array_types_times_e[count] << endl; 
                 } // x:x - x:00
                 else if(arr_times_min_e[count] == 0)
                 {
                     cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
-                    << arr_times_hr_s[count] << ":" << arr_times_min_s[count] << " - " << arr_times_hr_e[count] << ":00" << endl; 
+                    << arr_times_hr_s[count] << ":" << arr_times_min_s[count] << " " << array_types_times_s[count] << " - " << arr_times_hr_e[count] << ":00 " << array_types_times_e[count] << endl; 
                 }
                 else // x:x - x:x
                 {
                     cout << "Break " << (count + 1) << ": " << breaks_range[count] << " minutes" << "\t\t" 
-                    << arr_times_hr_s[count] << ":" << arr_times_min_s[count] << " - " << arr_times_hr_e[count] << ":" << arr_times_min_e[count] << endl;   
+                    << arr_times_hr_s[count] << ":" << arr_times_min_s[count] << " " << array_types_times_s[count] << " - " << arr_times_hr_e[count] << ":" << arr_times_min_e[count] << " " << array_types_times_e[count] << endl;   
                 }
             }
         }
@@ -381,4 +444,51 @@ int get_time_period(int var)
     {
         cout << "There is an error!!!" << endl << endl;
     }
+}
+
+string get_time_end_adjust(bool type, int position)
+{
+    string ret; // Use as temp values for return
+    
+    switch(type)
+    {
+        case false:
+        {
+            if(arr_times_hr_s[position] > 12)
+            {
+                arr_times_hr_s[position] -= 12;
+                ret = "p.m.";
+            }
+            else if(arr_times_hr_s[position] == 12)
+            {
+                ret = "p.m.";
+            }
+            else
+            {
+                ret = "a.m.";
+            }
+            
+            break;
+        }
+        case true:
+        {
+            if(arr_times_hr_e[position] > 12)
+            {
+                arr_times_hr_e[position] -= 12;
+                ret = "p.m.";
+            }
+            else if(arr_times_hr_e[position] == 12)
+            {
+                ret = "p.m.";
+            }
+            else
+            {
+                ret = "a.m.";
+            }
+            
+            break;
+        }
+    }
+    
+    return ret;
 }
