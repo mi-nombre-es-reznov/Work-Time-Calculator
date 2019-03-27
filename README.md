@@ -21,5 +21,5 @@
     Update (26 March 19): The program now will display a.m./p.m. next the
     starting/ending time as well as for every breaks starting/ending time. All
     of the times have been converted from their 24-hr equivalent back to their
-    12-hr equivalent with their a.m./p.m. value for displaying.
+    12-hr equivalent with their a.m./p.m. value for displaying. 
 </p>

@@ -5,6 +5,8 @@
     will ask the user if for their start and end times, seperating a space between hours and minutes. The prgram will display an option for the
     user to enter breaks in and have those calculated in the time off from working. Depending on the data that the system holds, only certain
     information will be displayed, to avoid redundancy.
+
+	New info will be added to the README file.
 */
 
 #include <iostream>
