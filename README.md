@@ -22,4 +22,8 @@
     starting/ending time as well as for every breaks starting/ending time. All
     of the times have been converted from their 24-hr equivalent back to their
     12-hr equivalent with their a.m./p.m. value for displaying.
+    
+    Update (27 March 19): The program now will allow for the user to pick a time
+    increment they want to get a specific time version. Current versions that
+    are selectable: 10-min, 15-min, and 20-min.
 </p>

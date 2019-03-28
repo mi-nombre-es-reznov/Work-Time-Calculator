@@ -9,15 +9,19 @@
 
 #include <iostream>
 #include <string>
+#include <cmath>
 using namespace std;
 
 // Call functions
 void store_break_times(int, int, int, int, int);
 int get_time_period(int);
 string get_time_end_adjust(bool, int);
+char time_choice_letter();
+double time_adjustment(char, double);
+void display_selected_convert_hours(char, int, double);
 
 // Global variables
-int out_break_hr_s, out_break_min_s, out_break_hr_e, out_break_min_e;
+int out_break_hr_s, out_break_min_s, out_break_hr_e, out_break_min_e, tot_sub_min = 0;
 int arr_times_hr_s[5] = {0, 0, 0, 0, 0};
 int arr_times_min_s[5] = {0, 0, 0, 0, 0};
 int arr_times_hr_e[5] = {0, 0, 0, 0, 0};
@@ -30,16 +34,20 @@ int breaks_end[5] = {0, 0, 0, 0, 0};
 bool array_type = false;
 string array_types_times_s[5];
 string array_types_times_e[5];
+double time_adjusted_value;
+
 
 int main()
 {
     string name;
     int start_hr, end_hr, breaks_hr_start, breaks_hr_end, break_count = 0, breaks_temp_start = 0, breaks_temp_end = 0, total_time = 0;
-    int start_min, end_min, breaks_min_start, breaks_min_end, sub_time;
+    int start_min, end_min, breaks_min_start, breaks_min_end;
+    double sub_time,  tot_num_min = 0;
     int breaks_range[5] = {0, 0, 0, 0, 0};
-    int tot_num_hr = 0, tot_num_min = 0, tot_sub_hr = 0, tot_sub_min = 0;
+    int tot_num_hr = 0, tot_sub_hr = 0;
     char again, ask_break;
     bool flag = false, asked_already = false, am_pm_bool = false;
+    char time_choice;
     
     // Get name for now, for a more personal experience throughout the program.
     cout << "Please enter your name: ";
@@ -62,6 +70,7 @@ int main()
     } while(start_hr < 0 || start_hr > 12 || start_min < 0 || start_min > 59);
     
     start_hr = get_time_period(start_hr);
+    system("CLS");
     
     // Ask for ending hour, 24 hr format.
     do
@@ -73,6 +82,7 @@ int main()
     } while(end_hr < 0 || end_hr > 12 || end_min < 0 || end_min > 59);
     
     end_hr = get_time_period(end_hr);
+    system("CLS");
     
     // Begin loop for breaks. Ask for number of breaks during work day, not to exceed 5. Place in 2 arrays (hr and min).
     do
@@ -103,6 +113,7 @@ int main()
             } while(breaks_hr_start < 0 || breaks_hr_start > 12 || breaks_min_start < 0 || breaks_min_start > 59);
             
             breaks_hr_start = get_time_period(breaks_hr_start);
+            system("CLS");
             
             // Ask for lunch hour end, 24 hr format.
             do
@@ -114,6 +125,7 @@ int main()
             } while(breaks_hr_end < 0 || breaks_hr_end > 12 || breaks_min_end < 0 || breaks_min_end > 59);
             
             breaks_hr_end = get_time_period(breaks_hr_end);
+            system("CLS");
             
             // Push break times into an array for pulling later
             store_break_times(breaks_hr_start, breaks_min_start, breaks_hr_end, breaks_min_end, break_count);
@@ -162,7 +174,10 @@ int main()
     // Convert all times over to minutes.
     total_time = (((end_hr * 60) + end_min) - ((start_hr * 60) + start_min));
     sub_time = total_time;
-    
+
+    // Call function to get what option the user wants to convert time to.
+    time_choice = time_choice_letter();
+
     // Convert breaks into minutes. Add hr[i] with time[i] together. Place result in mins. in new array.
     for(int index = 0; index < 5; index++)
     {
@@ -206,6 +221,9 @@ int main()
         }
     }
     
+    // Start using the value of the subraracted break times.
+    time_adjusted_value = time_adjustment(time_choice, tot_sub_min);
+    
     // Convert times back over to 12-hr format
     if(start_hr > 12)
     {
@@ -247,7 +265,7 @@ int main()
     be4 = get_time_end_adjust(true, 3);
     be5 = get_time_end_adjust(true, 4);
     
-    // Push values into an array for usage later
+    // Push values into an array for usage later a.m./p.m.
     array_types_times_s[0] = bs1;
     array_types_times_s[1] = bs2;
     array_types_times_s[2] = bs3;
@@ -388,6 +406,8 @@ int main()
         cout << "\n\n\nYou have worked a total time (including breaks): " << tot_sub_hr << " hrs. and " << tot_sub_min << " mins." << endl;
     }
 
+    display_selected_convert_hours(time_choice, tot_sub_hr, time_adjusted_value);
+
     system("pause");
     system("CLS");
     cout << "\n\n\n\n\n\n\n\n\n\n\nThank you for using NCompEng Technologies!\n\n\n\n\n\n\n\n\n\n\n";
@@ -491,4 +511,320 @@ string get_time_end_adjust(bool type, int position)
     }
     
     return ret;
+}
+
+char time_choice_letter()
+{
+    char choice, ret_val, pick_choice;
+    
+    system("CLS");
+    
+    do
+    {
+        cout << "Would you like to display your time using specific time increments? - [y/n] ";
+        cin >> choice;
+        choice = tolower(choice);
+    } while(choice != 'y' && choice != 'n');
+    
+    switch(choice)
+    {
+        case 'y':
+        {
+            do
+            {
+                cout << "Please select a time increment to use as measurement. (i.e. 3.25 hrs, using 15-min increments)" << endl << endl;
+                cout << "a) 10-min increments" << endl;
+                cout << "b) 15-min increments" << endl;
+                cout << "c) 20-min increments" << endl << endl;
+                
+                cout << "Choice: ";
+                cin >> pick_choice;
+            } while((pick_choice != 'a') && (pick_choice != 'b') && (pick_choice != 'c'));
+            
+            ret_val = pick_choice;
+            break;
+        }
+        case 'n':
+        {
+            cout << "No time increments have been used." << endl;
+            ret_val = 'd';
+            break;
+        }
+        default:
+        {
+            cout << "An error has occurred." << endl;
+            break;
+        }
+    }
+    
+    return ret_val;
+}
+
+double time_adjustment(char letter, double calc)
+{
+    double return_val, temp;
+    
+    switch(letter)
+    {
+        case 'a':
+        {
+            // Test to see if the current minutes is a mod of 10 for even calculations.
+            calc = fmod(calc, 60.0);
+            
+            // Check for (< 10) and (< 5)
+            if((calc < 10) && (calc < 5))
+            {
+                calc = 0;
+                temp = 0;
+            }
+            // Check for (< 10) AND (>= 5)
+            else if((calc < 10) && (calc >= 5))
+            {
+                calc = 10;
+                temp = (calc / 60);
+            }
+            // Check for (< 20) AND (< 15)
+            else if((calc < 20) && (calc < 15))
+            {
+                calc = 10;
+                temp = (calc / 60);
+            }
+            // Check for (< 20) AND (>= 15)
+            else if((calc < 20) && (calc >= 15))
+            {
+                calc = 20;
+                temp = (calc / 60);
+            }
+            // Check for (< 30) AND (< 25)
+            else if((calc < 30) && (calc < 25))
+            {
+                calc = 20;
+                temp = (calc / 60);
+            }
+            // Check for (< 30) AND (>= 25)
+            else if((calc < 30) && (calc >= 25))
+            {
+                calc = 30;
+                temp = (calc / 60);
+            }
+            // Check for (< 40) AND (< 35)
+            else if((calc < 40) && (calc < 35))
+            {
+                calc = 30;
+                temp = (calc / 60);
+            }
+            // Check for (< 40) AND (>= 35)
+            else if((calc < 40) && (calc >= 35))
+            {
+                calc = 40;
+                temp = (calc / 60);
+            }
+            // Check for (< 50) AND (< 45)
+            else if((calc < 50) && (calc < 45))
+            {
+                calc = 40;
+                temp = (calc / 60);
+            }
+            // Check for (< 50) AND (>= 45)
+            else if((calc < 50) && (calc >= 45))
+            {
+                calc = 50;
+                temp = (calc / 60);
+            }
+            // Check for (< 60) AND (< 55)
+            else if((calc < 60) && (calc < 55))
+            {
+                calc = 50;
+                temp = (calc / 60);
+            }
+            // Check for (< 60) AND (>= 55)
+            else if((calc < 60) && (calc >= 55))
+            {
+                calc = 60;
+                temp = (calc / 60);
+            }
+            
+            return_val = temp;
+            
+            break;
+        }
+        case 'b':
+        {
+            // Test to see if the current minutes is a mod of 10 for even calculations.
+            calc = fmod(calc, 60.0);
+
+            // Check for (< 15) and (< 7)
+            if((calc < 15) && (calc < 7))
+            {
+                calc = 0;
+                temp = 0;
+            }
+            // Check for (< 15) AND (>= 7)
+            else if((calc < 15) && (calc >= 7))
+            {
+                calc = 15;
+                temp = (calc / 60);
+            }
+            // Check for (< 30) AND (< 15)
+            else if((calc < 30) && (calc < 23))
+            {
+                calc = 15;
+                temp = (calc / 60);
+            }
+            // Check for (< 30) AND (>= 15)
+            else if((calc < 30) && (calc >= 23))
+            {
+                calc = 30;
+                temp = (calc / 60);
+            }
+            // Check for (< 45) AND (< 22)
+            else if((calc < 45) && (calc < 38))
+            {
+                calc = 30;
+                temp = (calc / 60);
+            }
+            // Check for (< 45) AND (>= 22)
+            else if((calc < 45) && (calc >= 38))
+            {
+                calc = 45;
+                temp = (calc / 60);
+            }
+            // Check for (< 40) AND (< 35)
+            else if((calc < 60) && (calc < 53))
+            {
+                calc = 45;
+                temp = (calc / 60);
+            }
+            // Check for (< 60) AND (>= 30)
+            else if((calc < 60) && (calc >= 53))
+            {
+                calc = 60;
+                temp = (calc / 60);
+            }
+            else
+            {
+                cout << "Error: " << endl;
+            }
+            
+            return_val = temp;
+            
+            break;
+        }
+        case 'c':
+        {
+            // Test to see if the current minutes is a mod of 10 for even calculations.
+            calc = fmod(calc, 60.0);
+
+            // Check for (< 15) and (< 7)
+            if((calc < 20) && (calc < 10))
+            {
+                calc = 0;
+                temp = 0;
+            }
+            // Check for (< 15) AND (>= 7)
+            else if((calc < 20) && (calc >= 10))
+            {
+                calc = 20;
+                temp = (calc / 60);
+            }
+            // Check for (< 30) AND (< 15)
+            else if((calc < 40) && (calc < 30))
+            {
+                calc = 20;
+                temp = (calc / 60);
+            }
+            // Check for (< 30) AND (>= 15)
+            else if((calc < 40) && (calc >= 30))
+            {
+                calc = 40;
+                temp = (calc / 60);
+            }
+            // Check for (< 45) AND (< 22)
+            else if((calc < 60) && (calc < 50))
+            {
+                calc = 40;
+                temp = (calc / 60);
+            }
+            // Check for (< 45) AND (>= 22)
+            else if((calc < 60) && (calc >= 50))
+            {
+                calc = 60;
+                temp = (calc / 60);
+            }
+            
+            return_val = temp;
+            
+            break;
+        }
+        case 'd':
+        {
+            return_val = 0;
+            break;
+        }
+        default:
+        {
+            cout << "Invalid choice." << endl << endl;
+            break;
+        }
+    }
+    
+    return return_val;
+}
+
+void display_selected_convert_hours(char choice, int tot_sub_hr, double time_adjusted_value)
+{
+    switch(choice)
+    {
+        case 'a':
+        {
+            if(time_adjusted_value > 0.0)
+            {
+                cout << "Your adjusted time at 10-min increments: " << (tot_sub_hr + time_adjusted_value) << endl;
+            }
+            else
+            {
+                cout << "Your adjusted time at 10-min increments: " << tot_sub_hr << ".0" << endl;
+            }
+            
+            break;
+        }
+        case 'b':
+        {
+            if(time_adjusted_value > 0.0)
+            {
+                cout << "Your adjusted time at 15-min increments: " << (tot_sub_hr + time_adjusted_value) << endl;
+            }
+            else
+            {
+                cout << "Your adjusted time at 15-min increments: " << tot_sub_hr << ".0" << endl;
+            }
+            
+            break;
+        }
+        case 'c':
+        {
+            if(time_adjusted_value > 0.0)
+            {
+                cout << "Your adjusted time at 20-min increments: " << (tot_sub_hr + time_adjusted_value) << endl;
+            }
+            else
+            {
+                cout << "Your adjusted time at 20-min increments: " << tot_sub_hr << ".0" << endl;
+            }
+            
+            break;
+        }
+        case 'd':
+        {
+            cout << " ";
+            
+            break;
+        }
+        default:
+        {
+            cout << "\n\n\nError!!!!\n\n\n";
+            
+            break;
+        }
+    }
 }
