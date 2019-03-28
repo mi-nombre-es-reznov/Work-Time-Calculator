@@ -1,6 +1,6 @@
-# Work-Time-Calculator
+# Work Time Calculator
 <p>
-    Description: <br><br>
+    Description: <br>
     
     This will be a program that will compute times to display how many 
     hours/minutes you worked, with time on/off. The program will ask the user 
