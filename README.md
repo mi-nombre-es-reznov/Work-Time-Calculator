@@ -30,6 +30,7 @@
 
 <h2>General Overview of Program and Screens</h2>
 
+<!-- Demo Overview - Name Request -->
 <p>
     When you first start the program, you will be asked for your name. It 
     doesn't matter if you put your first or full name. The point of this is to 
@@ -37,5 +38,8 @@
     during your displayed output.
 </p>
 
-<img src="/work_time_calculator_pictures/demo_of_what_screens_exist/wtc_a_ask_for_name_screen.png" title="Test" alt="Still failed">
-![Test](/work_time_calculator_pictures/demo_of_what_screens_exist/wtc_a_ask_for_name_screen.png)
+<!-- All images will not show up for the preview in Cloud 9, it is trusted they are in order by letter and the src link is correct -->
+<img src = "/work_time_calculator_pictures/demo_of_what_screens_exist/wtc_a_ask_for_name_screen.png" title="Name Request" alt="Picture of screen that requests name">
+
+<!-- Demo Overview - Time Entry Description -->
+<img src = "/work_time_calculator_pictures/demo_of_what_screens_exist/WTC_b_Description_of_how_to_enter_time.PNG" title="Time Entry Description" alt="Image of how to input time into system">
