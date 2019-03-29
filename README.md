@@ -282,3 +282,7 @@ This will be the final screen that the user will see before the program shuts do
 <!-- Begin letter - j -->
 <p>Displaying Results</p>
 <img src="/work_time_calculator_pictures/Example_4/E4_j.PNG" title="Displaying Results" alt="Image of Displayed Results">
+
+<!-- Fin -->
+<h2>Thank you for viewing my project. Feel free to message me if you have any questions.</h2>
+<img src="/work_time_calculator_pictures/Example_4/E4_end.PNG" title="End Screen" alt="Image of Program End Screen">
