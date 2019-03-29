@@ -26,6 +26,18 @@
     Update (27 March 19): The program now will allow for the user to pick a time
     increment they want to get a specific time version. Current versions that
     are selectable: 10-min, 15-min, and 20-min.
+    
+    Below, you will find five sections.
+    
+    Section 1: Overview and General idea of the program with possible scenerios
+    
+    Section 2-5: Examples 1 - 4. Each example tests real times from an 
+    undisclosed place of employment from a non-mentioned person. The person is
+    okay to have their times published below.
+    
+    Each example tests a different Time Increments on adjusted times.
+    
+    The results are as follows:
 </p>
 
 <h2>General Overview of Program and Screens</h2>
