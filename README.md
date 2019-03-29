@@ -64,8 +64,8 @@ program will do all the necessary conversions.
 <!-- Demo Overview - End Time -->
 <p>
 At this point, the user will now be asked to insert an end time to their day.
-This will have the same format as the start time. After this is inputted, the
-programm will now have appropriate values to find a range, assuming your end 
+This will have the same format as the start time. After input, the
+program will now have appropriate values to find a range, assuming your end 
 time is later than your start time.
 </p>
 
@@ -100,7 +100,7 @@ a capping message and continue automatically to the next screen.
 <p>
 The user will be asked after their break entries if they want to see their 
 times also put into a time increment format. Current time formats include:
-10, 15, and 20 minute time increments. (ex 4hr 20 in 15-min inc. == 4.25 hrs)
+10, 15, and 20 minute time increments. (ex 4hr 20min in 15-min inc. == 4.25 hrs)
 </p>
 
 <img src = "/work_time_calculator_pictures/demo_of_what_screens_exist/WTC_h_Ask_Time_Increments_screen.PNG" title="Asking of user if they want time increment adjustments" alt="Image of Time increment adjustment question to user">
@@ -130,3 +130,50 @@ This will be the final screen that the user will see before the program shuts do
 </p>
 
 <img src = "/work_time_calculator_pictures/demo_of_what_screens_exist/WTC_k_End_screen.PNG" title="Final screen before shutdown" alt="Image of final screen before shutdown">
+
+<!-- Begin Example 1 -->
+<h1>Example 1 - No Time Increments</h1>
+
+<!-- Begin letter - a -->
+<p>Name Entry: Becca</p>
+<img src="/work_time_calculator_pictures/Example_1/E1_a.PNG" title="Name Entry: Becca" alt="Image of Name Entry">
+
+<!-- Begin letter - b -->
+<p>Start Time: 8:15 -> 8 15</p>
+<img src="/work_time_calculator_pictures/Example_1/E1_b.PNG" title="Start Time: 8:15 -> 8 15" alt="Image of Start Time">
+
+<!-- Begin letter - c -->
+<p>a.m./p.m. select 8:15 am -> 8 15 a.m.</p>
+<img src="/work_time_calculator_pictures/Example_1/E1_c.PNG" title="a.m./p.m. select 8:15 am -> 8 15 a.m." alt="Image of a.m./p.m. select">
+
+<!-- Begin letter - d -->
+<p>End Time: 3:05 -> 3 05 or 3 5</p>
+<img src="/work_time_calculator_pictures/Example_1/E1_d.PNG" title="End Time: 3:05 -> 3 05 or 3 5" alt="Image of End Time">
+
+<!-- Begin letter - e -->
+<p>End Time: 3:05pm -> 3 05 or 3 5, choice p.m.</p>
+<img src="/work_time_calculator_pictures/Example_1/E1_e.PNG" title="a.m./p.m. select 3:05 p.m. -> 3 05 p.m." alt="Image of a.m./p.m. select">
+
+<!-- Begin letter - f -->
+<p>Break Question: yes 'y'</p>
+<img src="/work_time_calculator_pictures/Example_1/E1_f.PNG" title="Break Question: yes 'y'" alt="Image of break question">
+
+<!-- Begin letter - g -->
+<p>Insert break 1 start: 12:25 p.m. -> 12 25, choice p.m.</p>
+<img src="/work_time_calculator_pictures/Example_1/E1_g.PNG" title="Insert break 1 start: 12:25 p.m. -> 12 25, choice p.m." alt="Image of break entry 1 start">
+
+<!-- Begin letter - h -->
+<p>Insert break 1 end: 1:14 p.m. -> 1 14, choice p.m.</p>
+<img src="/work_time_calculator_pictures/Example_1/E1_h.PNG" title="Insert break 1 end: 1:14 p.m. -> 1 14, choice p.m." alt="Image of break entry 1 end">
+
+<!-- Begin letter - i -->
+<p>Add new break?: No 'n'</p>
+<img src="/work_time_calculator_pictures/Example_1/E1_i.PNG" title="Add new break?: No 'n'" alt="Image of new break entry">
+
+<!-- Begin letter - j -->
+<p>Time Increment?: No 'n'</p>
+<img src="/work_time_calculator_pictures/Example_1/E1_j.PNG" title="Time Increment?: No 'n'" alt="Image of Time Increment question">
+
+<!-- Begin letter - k -->
+<p>Displaying Results</p>
+<img src="/work_time_calculator_pictures/Example_1/E1_k.PNG" title="Displaying Results" alt="Image of Displayed Results">
