@@ -32,14 +32,21 @@
 
 <!-- Demo Overview - Name Request -->
 <p>
-    When you first start the program, you will be asked for your name. It 
-    doesn't matter if you put your first or full name. The point of this is to 
-    make the program feel a little more personal to you, the user, at the end
-    during your displayed output.
+    When starting the program, a prompt will ask for a name. It 
+    doesn't matter if the name that is entered is the users first or full name. 
+    The point of this is to make the program feel a little more personal to the
+    user at the end during the displayed output.
 </p>
 
 <!-- All images will not show up for the preview in Cloud 9, it is trusted they are in order by letter and the src link is correct -->
 <img src = "/work_time_calculator_pictures/demo_of_what_screens_exist/wtc_a_ask_for_name_screen.png" title="Name Request" alt="Picture of screen that requests name">
 
 <!-- Demo Overview - Time Entry Description -->
+<p>
+Once a name has been input into the program, the next screen will show how to
+input a time in the format the program requires. It is okay to enter the hour, 
+then enter a minute and press 'enter' again. However, it is more aesthetically 
+pleasing to enter both hour and minute on the same line (seperated by a space).
+</p>
+
 <img src = "/work_time_calculator_pictures/demo_of_what_screens_exist/WTC_b_Description_of_how_to_enter_time.PNG" title="Time Entry Description" alt="Image of how to input time into system">
