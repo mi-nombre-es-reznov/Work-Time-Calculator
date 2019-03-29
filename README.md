@@ -27,3 +27,15 @@
     increment they want to get a specific time version. Current versions that
     are selectable: 10-min, 15-min, and 20-min.
 </p>
+
+<h2>General Overview of Program and Screens</h2>
+
+<p>
+    When you first start the program, you will be asked for your name. It 
+    doesn't matter if you put your first or full name. The point of this is to 
+    make the program feel a little more personal to you, the user, at the end
+    during your displayed output.
+</p>
+
+<img src="/work_time_calculator_pictures/demo_of_what_screens_exist/wtc_a_ask_for_name_screen.png" title="Test" alt="Still failed">
+![Test](/work_time_calculator_pictures/demo_of_what_screens_exist/wtc_a_ask_for_name_screen.png)
