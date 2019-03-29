@@ -193,30 +193,49 @@ This will be the final screen that the user will see before the program shuts do
 <p>End Time: 12:46 p.m. -> 12 46, choice p.m.</p>
 <img src="/work_time_calculator_pictures/Example_2/E2_c.PNG" title="End Time: 12:46 p.m. -> 12 46, choice p.m." alt="Image of End Time">
 
-<!-- Begin letter - e --
-<p>End Time: 3:05pm -> 3 05 or 3 5, choice p.m.</p>
-<img src="/work_time_calculator_pictures/Example_1/E1_e.PNG" title="a.m./p.m. select 3:05 p.m. -> 3 05 p.m." alt="Image of a.m./p.m. select">
-
 <!-- Begin letter - d -->
 <p>Break Question: No 'n'</p>
 <img src="/work_time_calculator_pictures/Example_2/E2_d.PNG" title="Break Question: No 'n'" alt="Image of break question">
 
-<!-- Begin letter - g --
-<p>Insert break 1 start: 12:25 p.m. -> 12 25, choice p.m.</p>
-<img src="/work_time_calculator_pictures/Example_1/E1_g.PNG" title="Insert break 1 start: 12:25 p.m. -> 12 25, choice p.m." alt="Image of break entry 1 start">
-
-<!-- Begin letter - h --
-<p>Insert break 1 end: 1:14 p.m. -> 1 14, choice p.m.</p>
-<img src="/work_time_calculator_pictures/Example_1/E1_h.PNG" title="Insert break 1 end: 1:14 p.m. -> 1 14, choice p.m." alt="Image of break entry 1 end">
-
-<!-- Begin letter - i --
-<p>Add new break?: No 'n'</p>
-<img src="/work_time_calculator_pictures/Example_1/E1_i.PNG" title="Add new break?: No 'n'" alt="Image of new break entry">
-
-<!-- Begin letter - j -->
+<!-- Begin letter - e -->
 <p>Time Increment?: Yes 'y'</p>
 <img src="/work_time_calculator_pictures/Example_2/E2_e.PNG" title="Time Increment?: Yes 'y'" alt="Image of Time Increment question">
 
-<!-- Begin letter - k -->
+<!-- Begin letter - f -->
 <p>Displaying Results</p>
 <img src="/work_time_calculator_pictures/Example_2/E2_f.PNG" title="Displaying Results" alt="Image of Displayed Results">
+
+<!-- Begin Example 3 -->
+<h1>Example 3 - 10-min Time Increments</h1>
+
+<!-- Begin letter - a -->
+<p>Name Entry: Samantha</p>
+<img src="/work_time_calculator_pictures/Example_3/E3_a.PNG" title="Name Entry: Samantha" alt="Image of Name Entry">
+
+<!-- Begin letter - b -->
+<p>Start Time: 7:30 a.m. -> 7 30, choice a.m.</p>
+<img src="/work_time_calculator_pictures/Example_3/E3_b.PNG" title="Start Time: 7:30 a.m. -> 7 30, choice a.m." alt="Image of Start Time">
+
+<!-- Begin letter - c -->
+<p>End Time: 3:30 p.m. -> 3 30, choice p.m.</p>
+<img src="/work_time_calculator_pictures/Example_3/E3_c.PNG" title="End Time: 3:30 p.m. -> 3 30, choice p.m." alt="Image of End Time">
+
+<!-- Begin letter - d -->
+<p>Break Question: Yes 'y' -> break 1 start: 11:30 p.m. -> 11 30, choice p.m.</p>
+<img src="/work_time_calculator_pictures/Example_3/E3_d.PNG" title="Break Question: Yes 'y' -> break 1 start: 11:30 p.m. -> 11 30, choice p.m." alt="Image of break entry 1 start">
+
+<!-- Begin letter - e -->
+<p>Insert break 1 end: 12:30 p.m. -> 12 30, choice p.m.</p>
+<img src="/work_time_calculator_pictures/Example_3/E3_e.PNG" title="Insert break 1 end: 12:30 p.m. -> 12 30, choice p.m." alt="Image of break entry 1 end">
+
+<!-- Begin letter - f -->
+<p>Add new break?: No 'n'</p>
+<img src="/work_time_calculator_pictures/Example_3/E3_f.PNG" title="Add new break?: No 'n'" alt="Image of new break entry">
+
+<!-- Begin letter - g -->
+<p>Time Increment?: Yes 'y'</p>
+<img src="/work_time_calculator_pictures/Example_3/E3_g.PNG" title="Time Increment?: Yes 'y'" alt="Image of Time Increment question">
+
+<!-- Begin letter - h -->
+<p>Displaying Results</p>
+<img src="/work_time_calculator_pictures/Example_3/E3_h.PNG" title="Displaying Results" alt="Image of Displayed Results">
