@@ -193,7 +193,7 @@ This will be the final screen that the user will see before the program shuts do
 <p>End Time: 12:46 p.m. -> 12 46, choice p.m.</p>
 <img src="/work_time_calculator_pictures/Example_2/E2_c.PNG" title="End Time: 12:46 p.m. -> 12 46, choice p.m." alt="Image of End Time">
 
-<!-- Begin letter - e -->
+<!-- Begin letter - e --
 <p>End Time: 3:05pm -> 3 05 or 3 5, choice p.m.</p>
 <img src="/work_time_calculator_pictures/Example_1/E1_e.PNG" title="a.m./p.m. select 3:05 p.m. -> 3 05 p.m." alt="Image of a.m./p.m. select">
 
