@@ -50,3 +50,83 @@ pleasing to enter both hour and minute on the same line (seperated by a space).
 </p>
 
 <img src = "/work_time_calculator_pictures/demo_of_what_screens_exist/WTC_b_Description_of_how_to_enter_time.PNG" title="Time Entry Description" alt="Image of how to input time into system">
+
+<!-- Demo Overview - am/pm choice -->
+<p>
+This image showcases the 12-hr format as the option you have to choose from. 
+This means that you may no longer put your time in a 24-hr format (ex. 5:00 p.m.
+--> 1700), but rather in the 12-hr format (1700 --> 5 00, choice p.m.) and the
+program will do all the necessary conversions.
+</p>
+
+<img src = "/work_time_calculator_pictures/demo_of_what_screens_exist/WTC_c_am_pm_choice.PNG" title="a.m./p.m. choice selection" alt="Image of a.m./p.m. choice selection">
+
+<!-- Demo Overview - End Time -->
+<p>
+At this point, the user will now be asked to insert an end time to their day.
+This will have the same format as the start time. After this is inputted, the
+programm will now have appropriate values to find a range, assuming your end 
+time is later than your start time.
+</p>
+
+<img src = "/work_time_calculator_pictures/demo_of_what_screens_exist/WTC_d_End_time_input.PNG" title="End time" alt="Image of End time screen">
+
+<!-- Demo Overview - Break Insertion -->
+<p>
+The user will be asked whether or not if they want to include (non-paid) breaks 
+in their calculation of their workday. It will sum all breaks, then subtract the
+total time from your calculated day's range.
+</p>
+
+<img src = "/work_time_calculator_pictures/demo_of_what_screens_exist/WTC_e_ask_about_breaks_screen.PNG" title="Asking user if there are non-paid breaks that need to be calculated" alt="Image of program asking for (non-paid) break entry">
+
+<!-- Demo Overview - Break Entry -->
+<p>
+The user will be prompted to begin inserting their breaks. The program will 
+calculate the summation of time of all, up to 5, entries.
+</p>
+
+<img src = "/work_time_calculator_pictures/demo_of_what_screens_exist/WTC_f_break_screen_with_counter.PNG" title="Break Entry" alt="Image of break entries">
+
+<!-- Demo Overview - Break Entry Max -->
+<p>
+If the user tries to enter more than 5 breaks at once, the program will display
+a capping message and continue automatically to the next screen.
+</p>
+
+<img src = "/work_time_calculator_pictures/demo_of_what_screens_exist/WTC_g_break_screen_max_inputs.PNG" title="Break entry maximum" alt="Image of program message stating max break entries has been reached">
+
+<!-- Demo Overview - Asking of Time Increments -->
+<p>
+The user will be asked after their break entries if they want to see their 
+times also put into a time increment format. Current time formats include:
+10, 15, and 20 minute time increments. (ex 4hr 20 in 15-min inc. == 4.25 hrs)
+</p>
+
+<img src = "/work_time_calculator_pictures/demo_of_what_screens_exist/WTC_h_Ask_Time_Increments_screen.PNG" title="Asking of user if they want time increment adjustments" alt="Image of Time increment adjustment question to user">
+
+<!-- Demo Overview - Time Increments options -->
+<p>
+If the user opts for time adjustments to their work time after all calculations,
+they will be given options to select which adjustment best suits their needs.
+</p>
+
+<img src = "/work_time_calculator_pictures/demo_of_what_screens_exist/WTC_i_Time_Increment_screen_choices.PNG" title="Allowing user to select between options of time adjustments" alt="Image of Time increment options">
+
+<!-- Demo Overview - Displaying results -->
+<p>
+Once that final step is complete, the user will then be able to see their 
+calculated values, along with all times inserted and calculated breaks.
+
+As of now, if there is a time that is less than 10 minutes, the user will not
+see x:0x, but rather x:x, where x is an integer.
+</p>
+
+<img src = "/work_time_calculator_pictures/demo_of_what_screens_exist/WTC_j_Output_Screen.PNG" title="Results displayed" alt="Image of results">
+
+<!-- Demo Overview - End program -->
+<p>
+This will be the final screen that the user will see before the program shuts down.
+</p>
+
+<img src = "/work_time_calculator_pictures/demo_of_what_screens_exist/WTC_k_End_screen.PNG" title="Final screen before shutdown" alt="Image of final screen before shutdown">
