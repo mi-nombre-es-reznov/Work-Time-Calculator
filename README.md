@@ -26,6 +26,10 @@
     Update (27 March 19): The program now will allow for the user to pick a time
     increment they want to get a specific time version. Current versions that
     are selectable: 10-min, 15-min, and 20-min.
+
+	Update (6 April 19): This update now correctly prepends a '0' to any value 
+	that is less than 10. The picture that didn't showcase this in Example 1 has
+	now been updated, too.
     
     Below, you will find five sections.
     
